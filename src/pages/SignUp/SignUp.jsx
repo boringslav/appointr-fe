@@ -32,7 +32,7 @@ function SignUp() {
             }}
         >
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -76,7 +76,7 @@ function SignUp() {
               <Grid >
                 <NavLink to="/sign-in" passhref>
                   <Link  variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"Already have an account? Sign In"}
                   </Link>
                 </NavLink>
 
