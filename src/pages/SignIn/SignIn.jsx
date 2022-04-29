@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {NavLink} from "react-router-dom";
+import {useContext, useState} from 'react';
+import {NavLink, useNavigate} from "react-router-dom";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {signInRequest} from "../../services/api";
+import UserContext from "../../context/UserContext";
 
 
 
@@ -16,17 +17,20 @@ import {signInRequest} from "../../services/api";
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const {user,setUser} = useContext(UserContext);
+    const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     signInRequest({email, password})
         .then(response => {
-            console.log("Response: {}", response);
+            setUser(response.data);
+            navigate('/');
+
         })
         .catch(error => {
-            console.log("Error: ", error)
+            console.log("Error: ", error);
         })
 
   };
