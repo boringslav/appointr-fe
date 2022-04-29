@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import qs from 'qs';
 const BASE_URL = "http://localhost:8080";
 
 
@@ -14,9 +14,8 @@ export const signUpRequest = async ({name, email, password, role}) => {
         role,
     })
 }
-export const signInRequest = async ({name, password}) => {
-    return await axios.post(`${BASE_URL}/users/sign-in`,{
-        name,
-        password
+export const signInRequest = async (data) => {
+    return await axios.post(`${BASE_URL}/users/sign-in`,qs.stringify(data), {
+        headers: { 'content-type': 'application/x-www-form-urlencoded' }
     })
 }
