@@ -14,3 +14,9 @@ export const signUpRequest = async ({name, email, password, role}) => {
         role,
     })
 }
+export const signInRequest = async ({name, password}) => {
+    return await axios.post(`${BASE_URL}/users/sign-in`,{
+        name,
+        password
+    })
+}
