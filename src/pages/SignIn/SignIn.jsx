@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {NavLink} from "react-router-dom";
+import {useContext, useState} from 'react';
+import {NavLink, useNavigate} from "react-router-dom";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -8,18 +8,31 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import {signInRequest} from "../../services/api";
+import UserContext from "../../context/UserContext";
 
 
 
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {user,setUser} = useContext(UserContext);
+    const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    signInRequest({email, password})
+        .then(response => {
+            setUser(response.data);
+            navigate('/');
+
+        })
+        .catch(error => {
+            console.log("Error: ", error);
+        })
+
   };
 
   return (
@@ -46,6 +59,8 @@ export default function SignIn() {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
               />
               <TextField
                   margin="normal"
@@ -56,6 +71,8 @@ export default function SignIn() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
               />
 
               <Button
