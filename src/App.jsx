@@ -21,15 +21,15 @@ function App() {
             <UserContext.Provider value={{user,setUser}}>
                 <BrowserRouter>
                     <Routes>
-                        <Route index element={user? <Home/> : <Navigate to="sign-in"/>}/>
+                        <Route index element={user? <Home/> : <Navigate to="/sign-in"/>}/>
                         <Route path="bookings">
-                            <Route index element={user? <Bookings/> : <Navigate to="sign-in"/>}/>
-                            <Route path=":bookingId" element={user? <Booking/>: <Navigate to="sign-in"/>}/>
-                            <Route path="new" element={user? <CreateBooking/>: <Navigate to="sign-in"/>}/>
+                            <Route index element={user? <Bookings/> : <Navigate to="/sign-in"/>}/>
+                            <Route path=":bookingId" element={user? <Booking/>: <Navigate to="/sign-in"/>}/>
+                            <Route path="new" element={user? <CreateBooking/>: <Navigate to="/sign-in"/>}/>
                         </Route>
                         <Route path="users">
-                            <Route index element={user? <Users/> : <Navigate to="sign-in"/>}/>
-                            <Route path=":userId" element={user? <User/> : <Navigate to="sign-in"/>}/>
+                            <Route index element={user? <Users/> : <Navigate to="/sign-in"/>}/>
+                            <Route path=":userId" element={user? <User/> : <Navigate to="/sign-in"/>}/>
                         </Route>
                         <Route path="sign-in" element={<SignIn/>}/>
                         <Route path="sign-up" element={<SignUp/>}/>
