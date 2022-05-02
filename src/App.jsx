@@ -10,6 +10,7 @@ import User from "./pages/User/User";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import UserContext from "./context/UserContext";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -20,6 +21,10 @@ function App() {
         <ThemeProvider theme={theme}>
             <UserContext.Provider value={{user,setUser}}>
                 <BrowserRouter>
+                    <Navbar/>
+
+
+
                     <Routes>
                         <Route index element={user? <Home/> : <Navigate to="/sign-in"/>}/>
                         <Route path="bookings">

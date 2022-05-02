@@ -18,7 +18,6 @@ function SignUp() {
     const [password, setPassword] = useState("");
     const [isCompany, setIsCompany] = useState(false);
     const [error, setError] = useState("");
-    const [successfullRegistration, setSuccessfulRegistration] = useState(false);
 
     const navigate = useNavigate();
 
