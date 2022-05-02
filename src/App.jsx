@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from "react";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Booking from "./pages/Booking/Booking";
 import Bookings from "./pages/Bookings/Bookings";
@@ -14,7 +14,6 @@ import UserContext from "./context/UserContext";
 function App() {
     const [user, setUser] = useState(null);
     const providerValue = useMemo(() => ({user,setUser}),[user,setUser]);
-
     const theme = createTheme();
 
     return (
@@ -22,15 +21,15 @@ function App() {
             <UserContext.Provider value={{user,setUser}}>
                 <BrowserRouter>
                     <Routes>
-                        <Route index element={<Home/>}/>
+                        <Route index element={user? <Home/> : <Navigate to="sign-in"/>}/>
                         <Route path="bookings">
-                            <Route index element={<Bookings/>}/>
-                            <Route path=":bookingId" element={<Booking/>}/>
-                            <Route path="new" element={<CreateBooking/>}/>
+                            <Route index element={user? <Bookings/> : <Navigate to="sign-in"/>}/>
+                            <Route path=":bookingId" element={user? <Booking/>: <Navigate to="sign-in"/>}/>
+                            <Route path="new" element={user? <CreateBooking/>: <Navigate to="sign-in"/>}/>
                         </Route>
                         <Route path="users">
-                            <Route index element={<Users/>}/>
-                            <Route path=":userId" element={<User/>}/>
+                            <Route index element={user? <Users/> : <Navigate to="sign-in"/>}/>
+                            <Route path=":userId" element={user? <User/> : <Navigate to="sign-in"/>}/>
                         </Route>
                         <Route path="sign-in" element={<SignIn/>}/>
                         <Route path="sign-up" element={<SignUp/>}/>
