@@ -1,15 +1,18 @@
 import {useContext} from 'react';
 import UserContext from "../../context/UserContext";
 import NavbarNotLoggedIn from "./NavbarNotLoggedIn/NavbarNotLoggedIn";
-
+import NavbarLoggedIn from "./NavbarLoggedIn/NavbarLoggedIn";
 
 
 const Navbar = () => {
-    const user = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
 
 
-return (
-    <NavbarNotLoggedIn/>
-)
+    return (
+        <>
+            {user ? <NavbarLoggedIn/>
+                : <NavbarNotLoggedIn/>}
+        </>
+    )
 }
 export default Navbar;

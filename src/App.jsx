@@ -19,7 +19,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <UserContext.Provider value={{user,setUser}}>
+            <UserContext.Provider value={providerValue}>
                 <BrowserRouter>
                     <Navbar/>
 
