@@ -1,7 +1,8 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import styled from "@emotion/styled";
 import {getAllReq} from "../../services/api";
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import UserContext from "../../context/UserContext";
 
 const BookingCardsContainer = styled.div`
   display: flex;
@@ -14,12 +15,14 @@ const BookingCardsContainer = styled.div`
 function Bookings() {
   const [bookings, setBookings] = useState();
   const [error, setError] = useState();
+  const {user} = useContext(UserContext);
 
   useEffect(() => {
 
     (async () => {
       try {
-        const response = await getAllReq("/bookings");
+        console.log("Token: ", user.access_token);
+        const response = await getAllReq("/bookings", user.access_token);
 
         if(response.data) {
           setBookings(response.data.bookings);
