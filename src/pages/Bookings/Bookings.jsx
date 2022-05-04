@@ -58,7 +58,10 @@ function Bookings() {
 
                                 <Typography variant="body2">
                                     {booking.description}
-                                    <br/>
+                                </Typography>
+
+                                <Typography variant="body2">
+                                    {booking.bookingDate}
                                 </Typography>
                             </CardContent>
                             <CardActions>
