@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -8,16 +8,34 @@ import Button from "@mui/material/Button";
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDateTimePicker} from "@mui/x-date-pickers";
+import {createBookingRequest} from "../../services/api";
+import UserContext from "../../context/UserContext";
+import {useNavigate} from "react-router-dom";
 
 function CreateBooking() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dateTime, setDateTime] = useState(new Date());
-
-    const handleSubmit = (e) => {
+    const {user} = useContext(UserContext);
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(dateTime);
+
+        createBookingRequest({
+            title,
+            description,
+            bookingDate: dateTime.toISOString()
+        }, user.access_token).then(response => {
+            if(response.data) {
+                navigate('/bookings');
+            }
+
+        }).catch((err) => {
+            console.log("Error: ", err);
+        })
     }
+
+
     return <Container component="main" maxWidth="xs">
         <CssBaseline/>
         <Box
@@ -54,13 +72,13 @@ function CreateBooking() {
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                 />
-                <LocalizationProvider   dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDateTimePicker
                         minDate={new Date()}
-                        renderInput={(props) => <TextField sx={{mt:1}} fullWidth {...props} />}
+                        renderInput={(props) => <TextField sx={{mt: 1}} fullWidth {...props} />}
                         label="Date"
                         value={dateTime}
-                        onChange={dateTime => setDateTime(dateTime.toUTCString())}
+                        onChange={dateTime => setDateTime(dateTime)}
                     />
                 </LocalizationProvider>
                 <Button

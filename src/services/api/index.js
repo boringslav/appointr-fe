@@ -25,3 +25,16 @@ export const signInRequest = async (data) => {
         headers: {'content-type': 'application/x-www-form-urlencoded'}
     })
 }
+
+export const createBookingRequest = async ({title, description, bookingDate}, token) => {
+    return await axios.post(`${BASE_URL}/bookings/new`,{
+        title,
+        description,
+        bookingDate,
+    },{
+        headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    })
+}
