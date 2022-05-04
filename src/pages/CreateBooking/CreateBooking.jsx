@@ -24,7 +24,7 @@ function CreateBooking() {
         createBookingRequest({
             title,
             description,
-            bookingDate: dateTime.toISOString()
+            bookingDate: dateTime.toUTCString()
         }, user.access_token).then(response => {
             if(response.data) {
                 navigate('/bookings');
