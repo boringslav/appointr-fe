@@ -38,3 +38,11 @@ export const createBookingRequest = async ({title, description, bookingDate}, to
         },
     })
 }
+
+export const bookBookingRequest = async (bookingId, token) => {
+    return await axios.put(`${BASE_URL}/bookings/book/${bookingId}`,{}, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}

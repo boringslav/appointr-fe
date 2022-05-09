@@ -1,8 +1,21 @@
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import {useContext} from "react";
+import UserContext from "../../context/UserContext";
+import {bookBookingRequest} from "../../services/api";
 
 const BookingCard = (props) => {
+    const {user} = useContext(UserContext);
 
-console.log("Props", props)
+    const makeABooking = async  e => {
+        e.preventDefault();
+
+        bookBookingRequest(props.data.id, user.access_token).then(response => {
+            console.log("Response: ", response);
+        }).catch(e => {
+            console.log("Error: ", e);
+        })
+
+    }
 
     return (
         <Card sx={{
@@ -26,7 +39,7 @@ console.log("Props", props)
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Book</Button>
+                <Button onClick={makeABooking} size="small">Book</Button>
             </CardActions>
         </Card>
     )
