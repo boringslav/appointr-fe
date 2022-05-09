@@ -1,20 +1,18 @@
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import UserContext from "../../context/UserContext";
 import {bookBookingRequest} from "../../services/api";
+import Grid from "@mui/material/Grid";
 
 const BookingCard = (props) => {
     const {user} = useContext(UserContext);
 
-    const makeABooking = async  e => {
+    const makeABooking = async e => {
         e.preventDefault();
 
-        bookBookingRequest(props.data.id, user.access_token).then(response => {
-            console.log("Response: ", response);
-        }).catch(e => {
-            console.log("Error: ", e);
+        bookBookingRequest(props.data.id, user.access_token).catch(e => {
+            console.error("Error: ", e.message);
         })
-
     }
 
     return (
@@ -23,23 +21,55 @@ const BookingCard = (props) => {
             margin: "2rem"
         }}>
             <CardContent>
-                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                    {props.data.creator.name}
-                </Typography>
-                <Typography variant="h5" component="div">
+                <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                        <Typography sx={{fontSize: 12}} color="text.secondary" gutterBottom>
+                            Company
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Typography sx={{fontSize: 14}} color="secondary.main" gutterBottom>
+                            {props.data.creator.name}
+                        </Typography>
+                    </Grid>
+                </Grid>
+
+                <Typography variant="h5" color="primary.dark">
                     {props.data.title}
                 </Typography>
 
-                <Typography variant="body2">
+                <Typography variant="body2" color="secondary.light">
                     {props.data.description}
                 </Typography>
 
                 <Typography variant="body2">
                     {props.data.bookingDate}
                 </Typography>
+
+                {props.data.customer && (
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                                customer:
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Typography sx={{fontSize: 14}} color="text.primary">
+                                {props.data.customer?.email}
+                            </Typography>
+                        </Grid>
+
+                    </Grid>
+                )}
+
+
             </CardContent>
             <CardActions>
                 <Button onClick={makeABooking} size="small">Book</Button>
+                {user.email == props.data.creator.email ? <>
+                    <Button size="small" color="warning">Edit</Button>
+                    <Button size="small" color="error">Delete</Button>
+                </> : <> </>}
             </CardActions>
         </Card>
     )
