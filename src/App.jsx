@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import UserContext from "./context/UserContext";
 import Navbar from "./components/Navbar/Navbar";
 import BookingsContext from "./context/BookingsContext";
+import EditBooking from "./pages/EditBooking/EditBooking";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -33,6 +34,7 @@ function App() {
                                 <Route index element={user? <Bookings/> : <Navigate to="/sign-in"/>}/>
                                 <Route path=":bookingId" element={user? <Booking/>: <Navigate to="/sign-in"/>}/>
                                 <Route path="new" element={user? <CreateBooking/>: <Navigate to="/sign-in"/>}/>
+                                <Route path="edit/:bookingId" element={user? <EditBooking/>: <Navigate to="/sign-in"/>}/>
                             </Route>
                             <Route path="users">
                                 <Route index element={user? <Users/> : <Navigate to="/sign-in"/>}/>
