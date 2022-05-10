@@ -26,7 +26,7 @@ export default function SignIn() {
     signInRequest({email, password})
         .then(response => {
             setUser(response.data);
-            navigate('/');
+            navigate('/bookings');
 
         })
         .catch(error => {
