@@ -57,3 +57,12 @@ export const deleteBookingRequest = async(bookingId, token) => {
         }
     })
 }
+
+export const editBookingRequest = async(bookingId, newBookingData, token) => {
+    return await axios.put(`${BASE_URL}/bookings/${bookingId}`, newBookingData, {
+        headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}

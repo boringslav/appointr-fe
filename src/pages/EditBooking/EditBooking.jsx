@@ -1,16 +1,16 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import UserContext from "../../context/UserContext";
 import BookingsContext from "../../context/BookingsContext";
 import {useNavigate} from "react-router-dom";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import {useParams} from "react-router-dom";
+
+import {Container, CssBaseline, Box, Typography, TextField} from "@mui/material";
+
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import {DesktopDateTimePicker} from "@mui/x-date-pickers";
 import Button from "@mui/material/Button";
+import {editBookingRequest} from "../../services/api";
 
 const EditBooking = () => {
     const [title, setTitle] = useState("");
@@ -19,16 +19,29 @@ const EditBooking = () => {
     const {user} = useContext(UserContext);
     const {bookings} = useContext(BookingsContext)
     const navigate = useNavigate();
+    const {bookingId} = useParams();
 
 
+    useEffect(() => {
+        const booking = bookings.filter(booking => booking.id == bookingId);
+        setTitle(booking.title);
+        setDateTime(booking.bookingDate);
+        setDescription(booking.description);
 
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const response = await editBookingRequest(bookingId, {title, description, bookingDate: dateTime} ,user.access_token);
+            navigate('/bookings');
+
+        }catch (err) {
+            console.error("Error updating a booking: ", err.message);
+        }
 
 
     }
-
 
     return <Container component="main" maxWidth="xs">
         <CssBaseline/>
@@ -60,8 +73,8 @@ const EditBooking = () => {
                     margin="normal"
                     required
                     fullWidth
-                    name="Description"
                     label="Description"
+                    name="Description"
                     id="description"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
