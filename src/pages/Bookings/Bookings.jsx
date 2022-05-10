@@ -19,7 +19,6 @@ function Bookings() {
     const {user} = useContext(UserContext);
 
     useEffect(() => {
-
         (async () => {
             try {
                 const response = await getAllReq("/bookings", user.access_token);
@@ -38,6 +37,8 @@ function Bookings() {
 
 
     }, [])
+
+
 
     return (
         <>

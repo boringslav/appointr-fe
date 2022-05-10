@@ -12,6 +12,7 @@ export const getAllReq = async (entity, token) => {
         }
     });
 }
+
 export const signUpRequest = async ({name, email, password, role}) => {
     return await axios.post(`${BASE_URL}/users/sign-up`, {
         name,
@@ -20,6 +21,7 @@ export const signUpRequest = async ({name, email, password, role}) => {
         role,
     })
 }
+
 export const signInRequest = async (data) => {
     return await axios.post(`${BASE_URL}/users/sign-in`, qs.stringify(data), {
         headers: {'content-type': 'application/x-www-form-urlencoded'}
@@ -27,11 +29,11 @@ export const signInRequest = async (data) => {
 }
 
 export const createBookingRequest = async ({title, description, bookingDate}, token) => {
-    return await axios.post(`${BASE_URL}/bookings/new`,{
+    return await axios.post(`${BASE_URL}/bookings/new`, {
         title,
         description,
         bookingDate,
-    },{
+    }, {
         headers: {
             "content-type": "application/json",
             "Authorization": `Bearer ${token}`
@@ -40,8 +42,17 @@ export const createBookingRequest = async ({title, description, bookingDate}, to
 }
 
 export const bookBookingRequest = async (bookingId, token) => {
-    return await axios.put(`${BASE_URL}/bookings/book/${bookingId}`,{}, {
+    return await axios.put(`${BASE_URL}/bookings/book/${bookingId}`, {}, {
         headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+export const deleteBookingRequest = async(bookingId, token) => {
+    return await axios.delete(`${BASE_URL}/bookings/${bookingId}`, {
+        headers: {
+            "content-type": "application/json",
             "Authorization": `Bearer ${token}`
         }
     })
