@@ -4,15 +4,19 @@ import UserContext from "../../context/UserContext";
 import {bookBookingRequest, deleteBookingRequest} from "../../services/api";
 import Grid from "@mui/material/Grid";
 import {useNavigate} from "react-router-dom";
+import BookingsContext from "../../context/BookingsContext";
 
 const BookingCard = (props) => {
     const {user} = useContext(UserContext);
+    const {setBookings} = useContext(BookingsContext);
     const navigate = useNavigate();
 
     const makeABooking = async e => {
         e.preventDefault();
 
-        bookBookingRequest(props.data.id, user.access_token).catch(e => {
+        bookBookingRequest(props.data.id, user.access_token).then(res => {
+            setBookings(false);
+        }).catch(e => {
             console.error("Error: ", e.message);
         })
     }
@@ -20,8 +24,7 @@ const BookingCard = (props) => {
         e.preventDefault();
 
         deleteBookingRequest(props.data.id, user.access_token).then(response => {
-            console.log("Response: ", response);
-
+            setBookings(false);
         }).catch(e => {console.error("Error: ", e.message)})
 
 

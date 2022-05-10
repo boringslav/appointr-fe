@@ -11,35 +11,38 @@ import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import UserContext from "./context/UserContext";
 import Navbar from "./components/Navbar/Navbar";
+import BookingsContext from "./context/BookingsContext";
 
 function App() {
     const [user, setUser] = useState(null);
-    const providerValue = useMemo(() => ({user,setUser}),[user,setUser]);
+    const [bookings, setBookings] = useState(null);
+
+    const userProviderValue = useMemo(() => ({user,setUser}),[user,setUser]);
+    const bookingsProviderValue = useMemo(() => ({bookings,setBookings}), [bookings,setBookings]);
     const theme = createTheme();
 
     return (
         <ThemeProvider theme={theme}>
-            <UserContext.Provider value={providerValue}>
-                <BrowserRouter>
-                    <Navbar/>
-
-
-
-                    <Routes>
-                        <Route index element={user? <Home/> : <Navigate to="/sign-in"/>}/>
-                        <Route path="bookings">
-                            <Route index element={user? <Bookings/> : <Navigate to="/sign-in"/>}/>
-                            <Route path=":bookingId" element={user? <Booking/>: <Navigate to="/sign-in"/>}/>
-                            <Route path="new" element={user? <CreateBooking/>: <Navigate to="/sign-in"/>}/>
-                        </Route>
-                        <Route path="users">
-                            <Route index element={user? <Users/> : <Navigate to="/sign-in"/>}/>
-                            <Route path=":userId" element={user? <User/> : <Navigate to="/sign-in"/>}/>
-                        </Route>
-                        <Route path="sign-in" element={<SignIn/>}/>
-                        <Route path="sign-up" element={<SignUp/>}/>
-                    </Routes>
-                </BrowserRouter>
+            <UserContext.Provider value={userProviderValue}>
+                <BookingsContext.Provider value={bookingsProviderValue} >
+                    <BrowserRouter>
+                        <Navbar/>
+                        <Routes>
+                            <Route index element={user? <Home/> : <Navigate to="/sign-in"/>}/>
+                            <Route path="bookings">
+                                <Route index element={user? <Bookings/> : <Navigate to="/sign-in"/>}/>
+                                <Route path=":bookingId" element={user? <Booking/>: <Navigate to="/sign-in"/>}/>
+                                <Route path="new" element={user? <CreateBooking/>: <Navigate to="/sign-in"/>}/>
+                            </Route>
+                            <Route path="users">
+                                <Route index element={user? <Users/> : <Navigate to="/sign-in"/>}/>
+                                <Route path=":userId" element={user? <User/> : <Navigate to="/sign-in"/>}/>
+                            </Route>
+                            <Route path="sign-in" element={<SignIn/>}/>
+                            <Route path="sign-up" element={<SignUp/>}/>
+                        </Routes>
+                    </BrowserRouter>
+                </BookingsContext.Provider>
             </UserContext.Provider>
         </ThemeProvider>
 
