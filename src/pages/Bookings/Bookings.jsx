@@ -16,6 +16,7 @@ const BookingCardsContainer = styled.div`
 
 function Bookings() {
     const [error, setError] = useState();
+    const [areBookingsChanged, setAreBookingsChanged] = useState(false)
     const {user} = useContext(UserContext);
     const {bookings, setBookings} = useContext(bookingsContext);
 
@@ -52,8 +53,9 @@ function Bookings() {
             } catch (e) {
                 setError(e.message);
             }
+            setAreBookingsChanged(false);
         })()
-    }, [bookings])
+    }, [areBookingsChanged])
 
 
 
@@ -62,7 +64,7 @@ function Bookings() {
             <BookingsSubBar/>
             <BookingCardsContainer>
                 {bookings && bookings.map((booking) => {
-                        return <BookingCard key={booking.id} data={booking} />
+                        return <BookingCard key={booking.id} data={booking} setAreBookingsChanged={setAreBookingsChanged} />
                     }
                 )}
             </BookingCardsContainer>;

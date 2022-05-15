@@ -8,14 +8,13 @@ import BookingsContext from "../../context/BookingsContext";
 
 const BookingCard = (props) => {
     const {user} = useContext(UserContext);
-    const {setBookings} = useContext(BookingsContext);
     const navigate = useNavigate();
 
     const makeABooking = async e => {
         e.preventDefault();
 
         bookBookingRequest(props.data.id, user.access_token).then(res => {
-            setBookings(false);
+            props.setAreBookingsChanged(true);
         }).catch(e => {
             console.error("Error: ", e.message);
         })
@@ -24,7 +23,7 @@ const BookingCard = (props) => {
         e.preventDefault();
 
         deleteBookingRequest(props.data.id, user.access_token).then(response => {
-            setBookings(false);
+            props.setAreBookingsChanged(true);
         }).catch(e => {console.error("Error: ", e.message)})
 
 
