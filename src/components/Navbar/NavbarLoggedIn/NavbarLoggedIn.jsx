@@ -21,6 +21,9 @@ const NavbarLoggedIn = () => {
                     <StyledLink to='/bookings'>
                         <Button color="inherit">Bookings</Button>
                     </StyledLink>
+                    <StyledLink to='/chat'>
+                        <Button color="inherit">Chat</Button>
+                    </StyledLink>
                         <Button onClick={logout} color="inherit">Logout</Button>
                 </Toolbar>
             </AppBar>
