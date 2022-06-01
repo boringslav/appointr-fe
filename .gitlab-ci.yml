@@ -1,5 +1,6 @@
 stages:
-  -build
+  - build
+
 
 build:
   image: node:10
