@@ -2,7 +2,7 @@ import axios from "axios";
 import qs from "qs";
 
 const BASE_URL = "http://localhost:8080";
-
+export const WEBSOCKET_URL = `${BASE_URL}/ws`;
 
 export const getAllReq = async (entity, token) => {
     return await axios.get(`${BASE_URL}${entity}`, {
