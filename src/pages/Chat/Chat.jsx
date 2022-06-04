@@ -1,9 +1,11 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import UserContext from "../../context/UserContext";
-import {over} from 'stompjs';
+import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import {WEBSOCKET_URL} from "../../services/api";
 import "./Chat.css";
+import {Box, Container, List, ListItem, TextField} from "@mui/material";
+import Button from "@mui/material/Button";
 
 
 const Chat = () => {
@@ -18,22 +20,18 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [stompClient, setStompClient] = useState(null);
 
-
     useEffect(() => {
-        const Sock = new SockJS(WEBSOCKET_URL);
-        const stompClient = over(Sock);
+        const socket = new SockJS(WEBSOCKET_URL);
+        const stompClient = Stomp.over(socket);
+        stompClient.connect({Authorization: user.access_token}, onConnected);
         setStompClient(stompClient);
-        stompClient.connect({Authorization: user.access_token}, onConnected, onError);
     }, [])
 
     const onConnected = () => {
+        stompClient.subscribe('/topic/chatroom', onMessageReceived);
         setUserData({...userData, connected: true});
-        stompClient.subscribe('/chatroom/public', onMessageReceived);
-    }
-    const onError = (err) => {
-        console.error(err);
-    }
 
+    }
     const onMessageReceived = (payload) => {
         console.log("Received message: ", payload);
         const payloadData = JSON.parse(payload.body);
@@ -51,7 +49,7 @@ const Chat = () => {
                 message: userData.message,
                 status: "MESSAGE"
             };
-            stompClient.send("/message", {}, JSON.stringify(chatMessage));
+            stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
             setUserData({...userData, "message": ""});
 
             console.log('Chat message', chatMessage);
@@ -62,29 +60,28 @@ const Chat = () => {
     return <>
         {userData.connected && (
             <>
-                <div className="chat-box">
-
-                    <div className="chat-content">
-                        <ul className="chat-messages">
+                <Box >
+                    <Container >
+                        <List sx={{minHeight: '80%'}}>
                             {messages.map((chat, index) => (
-                                <li className={`message ${chat.senderName === userData.username && "self"}`}
+                                <ListItem className={`message ${chat.senderName === userData.username && "self"}`}
                                     key={index}>
                                     {chat.senderName !== userData.username &&
                                         <div className="avatar">{chat.senderName}</div>}
                                     <div className="message-data">{chat.message}</div>
                                     {chat.senderName === userData.username &&
                                         <div className="avatar self">{chat.senderName}</div>}
-                                </li>
+                                </ListItem>
                             ))}
-                        </ul>
+                        </List>
 
-                        <div className="send-message">
-                            <input type="text" className="input-message" placeholder="enter the message"
+                        <Container >
+                            <TextField fullWidth
                                    value={userData.message} onChange={handleMessage}/>
-                            <button type="button" className="send-button" onClick={sendValue}>send</button>
-                        </div>
-                    </div>
-                </div>
+                            <Button type="button" sx={{marginTop:"10px"}} size="medium" variant="contained" onClick={sendValue}>send</Button>
+                        </Container>
+                    </Container>
+                </Box>
             </>
         )}
     </>
