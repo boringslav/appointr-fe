@@ -6,13 +6,13 @@ import {WEBSOCKET_URL} from "../../services/api";
 import "./Chat.css";
 import {Box, Container, List, ListItem, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 
 const Chat = () => {
     const {user} = useContext(UserContext);
     const [userData, setUserData] = useState({
         username: user.email,
-        recievername: "",
         connected: false,
         message: ""
     });
@@ -34,11 +34,13 @@ const Chat = () => {
     }
     const onMessageReceived = (payload) => {
         console.log("Received message: ", payload);
+
         const payloadData = JSON.parse(payload.body);
         setMessages(messages =>[...messages, payloadData]);
     }
 
     const handleMessage = (event) => {
+        event.preventDefault();
         const {value} = event.target;
         setUserData({...userData, "message": value});
     }
@@ -47,7 +49,6 @@ const Chat = () => {
             const chatMessage = {
                 senderName: userData.username,
                 message: userData.message,
-                status: "MESSAGE"
             };
             stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
             setUserData({...userData, "message": ""});
@@ -56,10 +57,9 @@ const Chat = () => {
         }
     }
 
-
     return <>
+        <Typography  color="primary" component='h2' textAlign="center" variant='h5'>CHAT</Typography>
         {userData.connected && (
-            <>
                 <Box >
                     <Container >
                         <List sx={{minHeight: '80%'}}>
@@ -82,7 +82,6 @@ const Chat = () => {
                         </Container>
                     </Container>
                 </Box>
-            </>
         )}
     </>
 }
