@@ -39,7 +39,7 @@ function Home() {
                     }}>
                         <NavLink to="/sign-in">
                             <Button variant="contained">
-                                Sign Up Now
+                                Sign In
                             </Button>
                         </NavLink>
 

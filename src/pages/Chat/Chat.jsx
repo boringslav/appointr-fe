@@ -8,6 +8,7 @@ import {Box, Container, List, ListItem, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+var stompClient = null;
 
 const Chat = () => {
     const {user} = useContext(UserContext);
@@ -18,14 +19,14 @@ const Chat = () => {
     });
 
     const [messages, setMessages] = useState([]);
-    const [stompClient, setStompClient] = useState(null);
+    // const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
         const socket = new SockJS(WEBSOCKET_URL);
-        const stompClient = Stomp.over(socket);
+        stompClient = Stomp.over(socket);
         stompClient.connect({Authorization: user.access_token}, onConnected);
-        setStompClient(stompClient);
     }, [])
+
     const onConnected = () => {
         stompClient.subscribe('/topic/chatroom', onMessageReceived);
         setUserData({...userData, connected: true});
@@ -53,13 +54,17 @@ const Chat = () => {
             setUserData({...userData, "message": ""});
 
             console.log('Chat message', chatMessage);
+            console.log('Messages: ', messages);
         }
     }
 
     return <>
-        <Typography  color="primary" component='h2' textAlign="center" variant='h5'>CHAT</Typography>
-        {userData.connected && (
-                <Box >
+        <Typography  color="primary" component='h2' textAlign="center" variant='h4'
+        sx={{
+            marginTop:"3rem"
+        }}
+        >Chat</Typography>
+                <Box>
                     <Container >
                         <List sx={{minHeight: '80%'}}>
                             {messages.map((chat, index) => (
@@ -81,7 +86,6 @@ const Chat = () => {
                         </Container>
                     </Container>
                 </Box>
-        )}
     </>
 }
 export default Chat;
