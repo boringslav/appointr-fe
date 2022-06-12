@@ -10,6 +10,7 @@ const NavbarLoggedIn = () => {
     const logout = (e) => {
         e.preventDefault();
         setUser(null);
+
     }
     return (
         <Box sx={{ flexGrow: 1 }}>
