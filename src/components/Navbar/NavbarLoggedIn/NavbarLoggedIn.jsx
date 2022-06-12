@@ -5,7 +5,7 @@ import StyledLink from "../StyledLink/StyledLink";
 import UserContext from "../../../context/UserContext";
 
 const NavbarLoggedIn = () => {
-    const {setUser} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
 
     const logout = (e) => {
         e.preventDefault();
@@ -19,14 +19,14 @@ const NavbarLoggedIn = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Appointr
                     </Typography>
+                    <StyledLink to='/my-profile'>
+                        <Button color="inherit">My Profile</Button>
+                    </StyledLink>
                     <StyledLink to='/bookings'>
                         <Button color="inherit">Bookings</Button>
                     </StyledLink>
                     <StyledLink to='/chat'>
                         <Button color="inherit">Chat</Button>
-                    </StyledLink>
-                    <StyledLink to='/my-profile'>
-                        <Button color="inherit">My Profile</Button>
                     </StyledLink>
                         <Button color="warning" variant="text" onClick={logout} >Logout</Button>
                 </Toolbar>
