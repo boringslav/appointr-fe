@@ -59,7 +59,7 @@ const UserProfile = () => {
                     <CardActions>
                         <StyledLink to="/edit-profile" >
                             <Button color="warning">
-                                Edit
+                                Edit Profile
                             </Button>
                         </StyledLink>
                         <Button color="error" >Delete Profile</Button>

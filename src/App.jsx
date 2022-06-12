@@ -13,6 +13,7 @@ import BookingsContext from "./context/BookingsContext";
 import EditBooking from "./pages/EditBooking/EditBooking";
 import Chat from "./pages/Chat/Chat";
 import UserProfile from "./pages/UserProfile/UserProfile";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -40,6 +41,9 @@ function App() {
                             <Route path="chat" element={user ? <Chat/> : <Navigate to="/"/>}/>
                             <Route path="my-profile">
                                 <Route index element={user ? <UserProfile/> : <Navigate to="/"/>}/>
+                            </Route>
+                            <Route path="edit-profile">
+                                <Route index element={user ? <EditProfile/> : <Navigate to="/"/>}/>
                             </Route>
                             <Route path="sign-in" element={<SignIn/>}/>
                             <Route path="sign-up" element={<SignUp/>}/>
