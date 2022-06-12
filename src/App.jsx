@@ -30,18 +30,18 @@ function App() {
                     <BrowserRouter>
                         <Navbar/>
                         <Routes>
-                            <Route index element={user ? <Home/> : <Navigate to="/sign-in"/>}/>
+                            <Route index element={<Home/>}/>
                             <Route path="bookings">
-                                <Route index element={user ? <Bookings/> : <Navigate to="/sign-in"/>}/>
-                                <Route path=":bookingId" element={user ? <Booking/> : <Navigate to="/sign-in"/>}/>
-                                <Route path="new" element={user ? <CreateBooking/> : <Navigate to="/sign-in"/>}/>
+                                <Route index element={user ? <Bookings/> : <Navigate to="/"/>}/>
+                                <Route path=":bookingId" element={user ? <Booking/> : <Navigate to="/"/>}/>
+                                <Route path="new" element={user ? <CreateBooking/> : <Navigate to="/"/>}/>
                                 <Route path="edit/:bookingId"
-                                       element={user ? <EditBooking/> : <Navigate to="/sign-in"/>}/>
+                                       element={user ? <EditBooking/> : <Navigate to="/"/>}/>
                             </Route>
-                            <Route path="chat" element={user ? <Chat/> : <Navigate to="/sign-in"/>}/>
+                            <Route path="chat" element={user ? <Chat/> : <Navigate to="/"/>}/>
                             <Route path="users">
-                                <Route index element={user ? <Users/> : <Navigate to="/sign-in"/>}/>
-                                <Route path=":userId" element={user ? <User/> : <Navigate to="/sign-in"/>}/>
+                                <Route index element={user ? <Users/> : <Navigate to="/"/>}/>
+                                <Route path=":userId" element={user ? <User/> : <Navigate to="/"/>}/>
                             </Route>
                             <Route path="sign-in" element={<SignIn/>}/>
                             <Route path="sign-up" element={<SignUp/>}/>

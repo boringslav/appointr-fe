@@ -26,7 +26,6 @@ const Chat = () => {
         stompClient.connect({Authorization: user.access_token}, onConnected);
         setStompClient(stompClient);
     }, [])
-
     const onConnected = () => {
         stompClient.subscribe('/topic/chatroom', onMessageReceived);
         setUserData({...userData, connected: true});
