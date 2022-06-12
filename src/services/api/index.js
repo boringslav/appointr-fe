@@ -49,7 +49,7 @@ export const bookBookingRequest = async (bookingId, token) => {
         }
     })
 }
-export const deleteBookingRequest = async(bookingId, token) => {
+export const deleteBookingRequest = async (bookingId, token) => {
     return await axios.delete(`${BASE_URL}/bookings/${bookingId}`, {
         headers: {
             "content-type": "application/json",
@@ -58,8 +58,17 @@ export const deleteBookingRequest = async(bookingId, token) => {
     })
 }
 
-export const editBookingRequest = async(bookingId, newBookingData, token) => {
+export const editBookingRequest = async (bookingId, newBookingData, token) => {
     return await axios.put(`${BASE_URL}/bookings/${bookingId}`, newBookingData, {
+        headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+
+export const getProfileRequest = async (token) => {
+    return await axios.get(`${BASE_URL}/users/my-profile`, {
         headers: {
             "content-type": "application/json",
             "Authorization": `Bearer ${token}`

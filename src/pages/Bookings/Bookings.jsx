@@ -61,7 +61,7 @@ function Bookings() {
 
     return (
         <>
-            <BookingsSubBar/>
+            <BookingsSubBar user={user}/>
             <BookingCardsContainer>
                 {bookings && bookings.map((booking) => {
                         return <BookingCard key={booking.id} data={booking} setAreBookingsChanged={setAreBookingsChanged} />

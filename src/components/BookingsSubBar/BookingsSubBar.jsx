@@ -1,10 +1,10 @@
 import {alpha, styled} from "@mui/system";
-import {AppBar, Button, InputBase, Toolbar} from "@mui/material";
+import {AppBar, Button, InputBase, Toolbar, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import SearchIcon from '@mui/icons-material/Search';
 import StyledLink from "../Navbar/StyledLink/StyledLink";
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: "rgba(236, 236, 236 ,1)",
@@ -19,7 +19,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -29,7 +29,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -47,35 +47,38 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-const BookingsSubBar = () => {
+const BookingsSubBar = (props) => {
 
 
     const handleKeyPress = (e) => {
-        if(e.key === "Enter") {
+        if (e.key === "Enter") {
             console.log("Enter Pressed");
         }
     }
     return (
         <>
-            <Box sx={{ flexGrow: 1}}>
+
+            <Box sx={{flexGrow: 1}}>
                 <AppBar color="inherit" position="static">
+
                     <Toolbar sx={{justifyContent: "space-between"}}>
-                        <Search onKeyDown={handleKeyPress}>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-                        <div>
+                        <Typography>Hello, {props.user.email}</Typography>
+                        <Box sx={{display: "flex", alignItems:"center", justifyContent: "center"}}>
+                            <Search onKeyDown={handleKeyPress}>
+                                <SearchIconWrapper>
+                                    <SearchIcon/>
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Search…"
+                                    inputProps={{'aria-label': 'search'}}
+                                />
+                            </Search>
                             <StyledLink to="/bookings/new">
                                 <Button color="primary">
                                     Create a Booking
                                 </Button>
                             </StyledLink>
-                        </div>
+                        </Box>
                     </Toolbar>
                 </AppBar>
             </Box>
