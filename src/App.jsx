@@ -5,8 +5,6 @@ import Booking from "./pages/Booking/Booking";
 import Bookings from "./pages/Bookings/Bookings";
 import Home from "./pages/Home/Home";
 import CreateBooking from "./pages/CreateBooking/CreateBooking";
-import Users from "./pages/Users/Users";
-import User from "./pages/User/User";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import UserContext from "./context/UserContext";
@@ -14,6 +12,7 @@ import Navbar from "./components/Navbar/Navbar";
 import BookingsContext from "./context/BookingsContext";
 import EditBooking from "./pages/EditBooking/EditBooking";
 import Chat from "./pages/Chat/Chat";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -39,9 +38,8 @@ function App() {
                                        element={user ? <EditBooking/> : <Navigate to="/"/>}/>
                             </Route>
                             <Route path="chat" element={user ? <Chat/> : <Navigate to="/"/>}/>
-                            <Route path="users">
-                                <Route index element={user ? <Users/> : <Navigate to="/"/>}/>
-                                <Route path=":userId" element={user ? <User/> : <Navigate to="/"/>}/>
+                            <Route path="my-profile">
+                                <Route index element={user ? <UserProfile/> : <Navigate to="/"/>}/>
                             </Route>
                             <Route path="sign-in" element={<SignIn/>}/>
                             <Route path="sign-up" element={<SignUp/>}/>
