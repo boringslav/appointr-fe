@@ -18,7 +18,7 @@ const ProfileSubBar = (props) => {
                                     Edit Profile
                                 </Button>
                             </StyledLink>
-                            <Button color="error">Delete Profile</Button>
+                            <Button onClick={props.deleteProfile} color="error">Delete Profile</Button>
                             </div>
                     </Toolbar>
                 </AppBar>
