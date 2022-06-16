@@ -103,3 +103,12 @@ export const editProfileRequest = async (token, { name, password, email }) => {
     }
   );
 };
+
+export const deleteProfileRequest = async (token) => {
+  return await axios.delete(`${BASE_URL}/users/my-profile`, {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
